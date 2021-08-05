@@ -1,16 +1,39 @@
-FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build-env
+FROM mcr.microsoft.com/dotnet/sdk:3.1 AS base
 WORKDIR /app
+EXPOSE 80
 
-# Copy csproj and restore as distinct layers
-COPY ./src/Api.Calculo/*.csproj ./
+FROM mcr.microsoft.com/dotnet/sdk:3.1 AS build
+WORKDIR /src
+COPY src/Softplan.sln ./
+
+COPY src/Api.Taxa/*.csproj ./Api.Taxa/
+COPY src/Domain/*.csproj ./Domain/
+COPY src/Service/*.csproj ./Service/
+COPY src/Api.Calculo/*.csproj ./Api.Calculo/
+COPY src/Api.Tests/*.csproj ./Api.Tests/
+
+
 RUN dotnet restore
+COPY . .
+WORKDIR /src/Service
+RUN dotnet build -c Release -o /app
 
-# Copy everything else and build
-COPY ../engine/examples ./
-RUN dotnet publish -c Release -o out
+RUN dotnet restore
+COPY . .
+WORKDIR /src/Domain
+RUN dotnet build -c Release -o /app
 
-# Build runtime image
-FROM mcr.microsoft.com/dotnet/aspnet:3.1
+WORKDIR /src/Api.Calculo
+RUN dotnet build -c Release -o /app
+
+WORKDIR /src/Api.Taxa
+RUN dotnet build -c Release -o /app
+
+FROM build AS publish
+RUN dotnet publish -c Release -o /app
+#RUN dotnet publish src\Api.Calculo -c Release -o /app
+
+FROM base AS final
 WORKDIR /app
-COPY --from=build-env /app/out .
-ENTRYPOINT ["dotnet", "aspnetapp.dll"]
+COPY --from=publish /app .
+ENTRYPOINT ["dotnet", "Api.dll"]

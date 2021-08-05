@@ -1,7 +1,9 @@
+using System.Threading.Tasks;
+
 namespace Domain.Services
 {
   public interface ICalculoSevice
   {
-    decimal Calcular(decimal valorInicial, int meses);
+    Task<decimal> CalcularAsync(decimal valorInicial, int meses);
   }
 }

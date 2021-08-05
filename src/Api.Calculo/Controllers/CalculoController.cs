@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Domain.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,9 +14,9 @@ namespace Api.Calculo.Controllers
       _service = service;
     }
     [HttpGet()]
-    public ActionResult Get([FromQuery()] decimal valorInicial, int meses)
+    public async Task<ActionResult> Get([FromQuery()] decimal valorInicial, int meses)
     {
-      return Ok(_service.Calcular(valorInicial, meses));
+      return Ok(await _service.CalcularAsync(valorInicial, meses));
     }
   }
 }
