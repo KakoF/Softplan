@@ -16,7 +16,7 @@ namespace Api.Calculo.Controllers
     [HttpGet()]
     public async Task<ActionResult> Get([FromQuery()] decimal valorInicial, int meses)
     {
-      return Ok(await _service.CalcularAsync(valorInicial, meses));
+      return Ok(await _service.Calcular(valorInicial, meses));
     }
   }
 }

@@ -12,7 +12,7 @@ namespace Services
     {
       _request = request;
     }
-    public async Task<decimal> CalcularAsync(decimal valorInicial, int meses)
+    public async Task<decimal> Calcular(decimal valorInicial, int meses)
     {
       var juros = Double.Parse(await _request.GetRequest("taxaJuros")) / 100;
       return Math.Round(valorInicial * Convert.ToDecimal(Math.Pow((1 + juros), meses)), 2);

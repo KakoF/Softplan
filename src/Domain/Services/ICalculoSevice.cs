@@ -4,6 +4,6 @@ namespace Domain.Services
 {
   public interface ICalculoSevice
   {
-    Task<decimal> CalcularAsync(decimal valorInicial, int meses);
+    Task<decimal> Calcular(decimal valorInicial, int meses);
   }
 }
