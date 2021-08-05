@@ -10,7 +10,7 @@ namespace Api.Taxa.Controllers
     [HttpGet]
     public ActionResult Get()
     {
-      return Ok("http://asdasd");
+      return Ok("https://github.com/KakoF/Softplan");
     }
   }
 }
