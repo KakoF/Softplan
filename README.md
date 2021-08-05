@@ -5,7 +5,7 @@ Contemplando:
 - Api para Taxa(2 endpoints, para recuperar a taxa e url do git -> Consultar Swagger)
 - Api para Calculo(2 endpoints, para recuperar a taxa e url do git -> Consultar Swagger)
 - Classlib para Domain
-- Classlib para Serviçes
+- Classlib para Services
 - Teste Unitarios(Ressalto que teste é algo que eu não tenho tanta experência, sei que é necessário e estou me organizando pra estudar isso melhor)
 
 ## Instalar dependências para executar o projeto
