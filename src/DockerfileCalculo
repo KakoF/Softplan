@@ -1,0 +1,23 @@
+FROM mcr.microsoft.com/dotnet/sdk:3.1 AS base
+WORKDIR /app
+
+
+FROM mcr.microsoft.com/dotnet/sdk:3.1 AS build
+WORKDIR /src
+COPY ./Api.Calculo ./Calculo
+#COPY ["Api.Calculo/Api.Calculo.csproj", "Calculo/"]
+COPY ["Service/Service.csproj", "Service/"]
+COPY ["Domain/Domain.csproj", "Domain/"]
+RUN dotnet restore "Calculo/Api.Calculo.csproj"
+COPY . .
+WORKDIR "/src/Calculo"
+RUN dotnet build "Api.Calculo.csproj" -c Release -o /app
+
+FROM build AS publish
+RUN dotnet publish "Api.Calculo.csproj" -c Release -o /app
+
+FROM base AS final
+WORKDIR /app
+COPY --from=publish /app .
+ENTRYPOINT ["dotnet", "Api.Calculo.dll"]
+EXPOSE 5002:5002

@@ -28,6 +28,12 @@ namespace Api.Taxa
     public void ConfigureServices(IServiceCollection services)
     {
       services.AddSingleton<ITaxaService, Services.Taxa>();
+      services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
+                {
+                    builder.AllowAnyOrigin()
+                           .AllowAnyMethod()
+                           .AllowAnyHeader();
+                }));
       services.AddSwaggerGen(c =>
       {
         c.SwaggerDoc("v1", new OpenApiInfo
@@ -52,7 +58,7 @@ namespace Api.Taxa
       {
         app.UseDeveloperExceptionPage();
       }
-
+      app.UseCors("MyPolicy");
       app.UseHttpsRedirection();
       app.UseSwagger();
       app.UseSwaggerUI(c =>

@@ -21,7 +21,7 @@ namespace Api.Taxa
             .ConfigureWebHostDefaults(webBuilder =>
             {
               webBuilder.UseStartup<Startup>();
-              webBuilder.UseUrls("http://localhost:5001");
+              webBuilder.UseUrls("http://*:5001");
             });
   }
 }

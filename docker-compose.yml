@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  Calculo:
+    build:
+      context: ./src/
+      dockerfile: DockerfileCalculo
+    container_name: calculo
+    image: calculo
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - URL_TAXA=http://taxa:5001/
+    ports:
+      - 5002:5002
+    #networks:
+    #  - s-network
+  Taxa:
+    build:
+      context: ./src/
+      dockerfile: DockerfileTaxa
+    container_name: taxa
+    image: taxa
+    ports:
+      - 5001:5001
+    #networks:
+    #  - s-network
+
+#networks:
+#  s-network:
+#    external: true

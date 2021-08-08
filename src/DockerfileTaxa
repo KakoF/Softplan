@@ -1,0 +1,23 @@
+FROM mcr.microsoft.com/dotnet/sdk:3.1 AS base
+WORKDIR /app
+
+
+FROM mcr.microsoft.com/dotnet/sdk:3.1 AS build
+WORKDIR /src
+COPY ./Api.Taxa ./Taxa
+#COPY ["Api.Taxa/Api.Taxa.csproj", "Taxa/"]
+COPY ["Service/Service.csproj", "Service/"]
+COPY ["Domain/Domain.csproj", "Domain/"]
+RUN dotnet restore "Taxa/Api.Taxa.csproj"
+COPY . .
+WORKDIR "/src/Taxa"
+RUN dotnet build "Api.Taxa.csproj" -c Release -o /app
+
+FROM build AS publish
+RUN dotnet publish "Api.Taxa.csproj" -c Release -o /app
+
+FROM base AS final
+WORKDIR /app
+COPY --from=publish /app .
+ENTRYPOINT ["dotnet", "Api.Taxa.dll"]
+EXPOSE 5001:5001
