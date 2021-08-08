@@ -35,3 +35,6 @@ Testes é um fator que eu quero estudar para implementação concisa, então:
 - Contempla teste unitário, mas reconheço minha falta de experiência nisso
 - Não contempla teste de integração
 - Preciso melhorar subir os containers com a aplicação, devido as classlibs eu tive muita dúvida. Docker no meu dia a dia apenas para subir alguma dependência(redis, algum banco, etc...)
+
+## 08/08/2021
+Imagem com as 2 aplicação foram adicionadas
